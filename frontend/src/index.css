@@ -1,0 +1,43 @@
+@import "tailwindcss";
+
+:root {
+  --background: 20 14.3% 4.1%;
+  --foreground: 60 9.1% 97.8%;
+  --primary: 262 80% 50%;
+  --primary-foreground: 210 40% 98%;
+  --secondary: 217 32.6% 17.5%;
+  --secondary-foreground: 210 40% 98%;
+  --accent: 262 80% 50%;
+  --accent-foreground: 210 40% 98%;
+  --destructive: 0 84.2% 60.2%;
+  --destructive-foreground: 210 40% 98%;
+  --muted: 217 32.6% 17.5%;
+  --muted-foreground: 215 13.8% 34.3%;
+  --border: 217 32.6% 17.5%;
+  --input: 217 32.6% 17.5%;
+  --ring: 262 80% 50%;
+  --radius: 0.5rem;
+}
+
+.light {
+  --background: 0 0% 100%;
+  --foreground: 222.2 84% 4.9%;
+  --primary: 262 80% 50%;
+  --primary-foreground: 210 40% 98%;
+  --secondary: 217 32.6% 17.5%;
+  --secondary-foreground: 210 40% 98%;
+  --accent: 262 80% 50%;
+  --accent-foreground: 210 40% 98%;
+  --destructive: 0 84.2% 60.2%;
+  --destructive-foreground: 210 40% 98%;
+  --muted: 220 14.3% 95.9%;
+  --muted-foreground: 220 8.9% 46.1%;
+  --border: 220 13% 91%;
+  --input: 220 13% 91%;
+  --ring: 262 80% 50%;
+}
+
+body {
+  background-color: hsl(var(--background));
+  color: hsl(var(--foreground));
+}
