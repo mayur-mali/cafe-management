@@ -59,6 +59,7 @@ export const sessionsAPI = {
   end: (id: string) => apiClient.post(`/sessions/${id}/end`),
   pause: (id: string) => apiClient.post(`/sessions/${id}/pause`),
   resume: (id: string) => apiClient.post(`/sessions/${id}/resume`),
+  generateBill: (id: string, data: any) => apiClient.post(`/sessions/${id}/generate-bill`, data),
 };
 
 export const inventoryAPI = {

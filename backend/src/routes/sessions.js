@@ -116,6 +116,40 @@ router.post('/:id/end', async (req, res) => {
     // Update station status back to available
     await Station.findByIdAndUpdate(session.stationId, { status: 'available' });
 
+    // Auto-generate bill when session ends
+    try {
+      console.log('[v0] Auto-generating bill for session:', req.params.id);
+      const bill = new Bill({
+        sessionId: session._id,
+        stationId: session.stationId,
+        customerName: session.customerName,
+        sessionCost: cost,
+        items: [],
+        itemsTotal: 0,
+        subtotal: cost,
+        tax: cost * 0.1,
+        taxRate: 0.1,
+        discount: 0,
+        total: cost + cost * 0.1,
+        paymentMethod: 'pending',
+        status: 'pending',
+        notes: 'Auto-generated from session end',
+      });
+
+      const savedBill = await bill.save();
+
+      // Update session with bill reference
+      await Session.findByIdAndUpdate(req.params.id, {
+        billGenerated: true,
+        billId: savedBill._id,
+      });
+
+      console.log('[v0] Bill auto-generated:', savedBill._id);
+    } catch (billError) {
+      console.error('[v0] Error auto-generating bill:', billError);
+      // Don't fail the session end if bill generation fails
+    }
+
     res.json(updatedSession);
   } catch (error) {
     console.error('[v0] End session error:', error);
