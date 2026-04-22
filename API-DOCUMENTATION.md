@@ -459,23 +459,141 @@ Authorization: Bearer {{TOKEN}}
 
 ### End Session
 ```
-PUT /api/sessions/:sessionId/end
+POST /api/sessions/:id/end
 Content-Type: application/json
 Authorization: Bearer {{TOKEN}}
+```
+
+**Request Body:** (empty)
+```json
+{}
 ```
 
 **Response (200):**
 ```json
 {
-  "message": "Session ended",
+  "_id": "60d5ec49f1b2c72b0c8e4a1f",
+  "stationId": "60d5ec49f1b2c72b0c8e4a1e",
+  "customerName": "Raj Kumar",
+  "planId": "60d5ec49f1b2c72b0c8e4a1c",
+  "startTime": "2024-01-15T11:00:00.000Z",
+  "endTime": "2024-01-15T12:05:00.000Z",
+  "duration": 65,
+  "status": "completed",
+  "cost": 162.50,
+  "billGenerated": false,
+  "createdAt": "2024-01-15T11:00:00.000Z",
+  "updatedAt": "2024-01-15T12:05:00.000Z"
+}
+```
+
+---
+
+### Generate Bill from Completed Session ⭐ NEW FEATURE
+```
+POST /api/sessions/:id/generate-bill
+Content-Type: application/json
+Authorization: Bearer {{TOKEN}}
+```
+
+**Description:** Automatically generates a bill from a completed gaming session. Call this endpoint after ending a session. You can add food/drink items, apply discounts, and set payment method.
+
+**Request Body:**
+```json
+{
+  "items": [
+    {
+      "itemName": "Red Bull Energy Drink",
+      "quantity": 2,
+      "unitPrice": 3.50
+    },
+    {
+      "itemName": "Gaming Snacks",
+      "quantity": 1,
+      "unitPrice": 5.00
+    }
+  ],
+  "discount": 1.50,
+  "taxRate": 0.10,
+  "paymentMethod": "card",
+  "notes": "VIP customer loyalty discount"
+}
+```
+
+**Parameters:**
+- `items` (optional): Array of additional items
+  - `itemName` (string): Item name
+  - `quantity` (number): Quantity
+  - `unitPrice` (number): Price per unit
+- `discount` (optional, default: 0): Discount amount
+- `taxRate` (optional, default: 0.1): Tax rate (0.1 = 10%)
+- `paymentMethod` (optional, enum: 'cash'|'card'|'online', default: 'cash')
+- `notes` (optional): Additional notes
+
+**Response (201 Created):**
+```json
+{
+  "message": "Bill generated successfully",
+  "bill": {
+    "_id": "60d5ec49f1b2c72b0c8e4a21",
+    "sessionId": "60d5ec49f1b2c72b0c8e4a1f",
+    "stationId": "60d5ec49f1b2c72b0c8e4a1e",
+    "customerName": "Raj Kumar",
+    "sessionCost": 162.50,
+    "items": [
+      {
+        "itemName": "Red Bull Energy Drink",
+        "quantity": 2,
+        "unitPrice": 3.50,
+        "totalPrice": 7.00
+      },
+      {
+        "itemName": "Gaming Snacks",
+        "quantity": 1,
+        "unitPrice": 5.00,
+        "totalPrice": 5.00
+      }
+    ],
+    "itemsTotal": 12.00,
+    "subtotal": 174.50,
+    "taxRate": 0.10,
+    "tax": 17.45,
+    "discount": 1.50,
+    "total": 190.45,
+    "paymentMethod": "card",
+    "status": "pending",
+    "notes": "VIP customer loyalty discount",
+    "createdAt": "2024-01-15T12:05:30.000Z"
+  },
   "session": {
     "_id": "60d5ec49f1b2c72b0c8e4a1f",
-    "status": "ended",
-    "endTime": "2024-01-15T12:05:00.000Z",
-    "totalDuration": 65,
-    "totalCost": 162.50
+    "billGenerated": true,
+    "billId": "60d5ec49f1b2c72b0c8e4a21"
   }
 }
+```
+
+**Error Responses:**
+- 404: `{ "error": "Session not found" }`
+- 400: `{ "error": "Session must be completed before generating bill" }`
+- 400: `{ "error": "Bill already exists for this session", "bill": {...} }`
+
+**Bill Calculation Formula:**
+```
+subtotal = sessionCost + itemsTotal
+tax = subtotal × taxRate
+total = subtotal + tax - discount
+```
+
+**Example Calculation:**
+```
+Session Cost: $162.50
+Items Total: $12.00
+Subtotal: $174.50
+Tax (10%): $17.45
+Discount: $1.50
+────────────
+TOTAL: $190.45
 ```
 
 ---

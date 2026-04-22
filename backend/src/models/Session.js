@@ -34,6 +34,14 @@ const sessionSchema = new mongoose.Schema(
     },
     cost: Number,
     notes: String,
+    billGenerated: {
+      type: Boolean,
+      default: false,
+    },
+    billId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Bill',
+    },
   },
   { timestamps: true }
 );

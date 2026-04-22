@@ -854,6 +854,151 @@
               ]
             }
           }
+        },
+        {
+          "name": "Generate Bill from Completed Session",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{TOKEN}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"items\": [\n    {\n      \"itemName\": \"Energy Drink\",\n      \"quantity\": 2,\n      \"unitPrice\": 2.50\n    },\n    {\n      \"itemName\": \"Snacks\",\n      \"quantity\": 1,\n      \"unitPrice\": 5.00\n    }\n  ],\n  \"discount\": 2.50,\n  \"taxRate\": 0.1,\n  \"paymentMethod\": \"card\",\n  \"notes\": \"Customer paid for additional items\"\n}"
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/api/sessions/{{SESSION_ID}}/generate-bill",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "api",
+                "sessions",
+                "{{SESSION_ID}}",
+                "generate-bill"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Sessions - Bill Generation Tests",
+      "item": [
+        {
+          "name": "1. End Session (Complete it first)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{TOKEN}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/api/sessions/{{SESSION_ID}}/end",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "api",
+                "sessions",
+                "{{SESSION_ID}}",
+                "end"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "2. Generate Bill from Session (After ending)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{TOKEN}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"items\": [\n    {\n      \"itemName\": \"Red Bull Energy Drink\",\n      \"quantity\": 1,\n      \"unitPrice\": 3.50\n    }\n  ],\n  \"discount\": 0,\n  \"taxRate\": 0.1,\n  \"paymentMethod\": \"card\",\n  \"notes\": \"Gaming session bill with refreshment\"\n}"
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/api/sessions/{{SESSION_ID}}/generate-bill",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "api",
+                "sessions",
+                "{{SESSION_ID}}",
+                "generate-bill"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "3. Generate Bill with Multiple Items",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{TOKEN}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"items\": [\n    {\n      \"itemName\": \"Gaming Station Usage\",\n      \"quantity\": 1,\n      \"unitPrice\": 10.00\n    },\n    {\n      \"itemName\": \"Coca Cola\",\n      \"quantity\": 2,\n      \"unitPrice\": 2.50\n    },\n    {\n      \"itemName\": \"Burger\",\n      \"quantity\": 1,\n      \"unitPrice\": 8.50\n    },\n    {\n      \"itemName\": \"Fries\",\n      \"quantity\": 2,\n      \"unitPrice\": 4.00\n    }\n  ],\n  \"discount\": 3.00,\n  \"taxRate\": 0.12,\n  \"paymentMethod\": \"cash\",\n  \"notes\": \"Group gaming session with food orders\"\n}"
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/api/sessions/{{SESSION_ID}}/generate-bill",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "api",
+                "sessions",
+                "{{SESSION_ID}}",
+                "generate-bill"
+              ]
+            }
+          },
+          "response": []
         }
       ]
     }
