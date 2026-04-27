@@ -9,8 +9,7 @@ import StationsPage from './pages/StationsPage';
 import SessionsPage from './pages/SessionsPage';
 import InventoryPage from './pages/InventoryPage';
 import BillsPage from './pages/BillsPage';
-import CafeMenuPage from './pages/CafeMenuPage';
-import OrderHistoryPage from './pages/OrderHistoryPage';
+
 
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   const { isAuthenticated, loading } = useAuth();
@@ -32,26 +31,6 @@ function AppContent() {
       <Route path="/login" element={<LoginPage />} />
       <Route path="/register" element={<RegisterPage />} />
 
-      {/* Cafe Menu - Separate Layout */}
-      <Route
-        path="/menu"
-        element={
-          <ProtectedRoute>
-            <CafeMenuPage />
-          </ProtectedRoute>
-        }
-      />
-
-      {/* Order History */}
-      <Route
-        path="/orders"
-        element={
-          <ProtectedRoute>
-            <OrderHistoryPage />
-          </ProtectedRoute>
-        }
-      />
-
       {/* Admin Dashboard */}
       <Route
         element={
@@ -68,7 +47,7 @@ function AppContent() {
         <Route path="/bills" element={<BillsPage />} />
       </Route>
 
-      <Route path="/" element={<Navigate to="/menu" replace />} />
+      <Route path="/" element={<Navigate to="/dashboard" replace />} />
     </Routes>
   );
 }

@@ -1,43 +1,74 @@
 @import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap');
 
 :root {
-  --background: 20 14.3% 4.1%;
-  --foreground: 60 9.1% 97.8%;
-  --primary: 262 80% 50%;
-  --primary-foreground: 210 40% 98%;
-  --secondary: 217 32.6% 17.5%;
-  --secondary-foreground: 210 40% 98%;
-  --accent: 262 80% 50%;
-  --accent-foreground: 210 40% 98%;
-  --destructive: 0 84.2% 60.2%;
-  --destructive-foreground: 210 40% 98%;
-  --muted: 217 32.6% 17.5%;
-  --muted-foreground: 215 13.8% 34.3%;
-  --border: 217 32.6% 17.5%;
-  --input: 217 32.6% 17.5%;
-  --ring: 262 80% 50%;
+  --background: 0 0% 7.5%;
+  --foreground: 0 0% 88.6%;
+  --primary: 357 100% 70%;
+  --primary-foreground: 357 100% 4%;
+  --primary-container: 357 100% 55%;
+  --secondary: 0 0% 80%;
+  --secondary-foreground: 0 0% 20%;
+  --accent: 357 100% 70%;
+  --accent-foreground: 357 100% 4%;
+  --destructive: 357 100% 60%;
+  --destructive-foreground: 0 0% 98%;
+  --muted: 0 0% 21%;
+  --muted-foreground: 0 0% 74%;
+  --border: 0 0% 21%;
+  --input: 0 0% 8%;
+  --ring: 357 100% 70%;
   --radius: 0.5rem;
 }
 
-.light {
-  --background: 0 0% 100%;
-  --foreground: 222.2 84% 4.9%;
-  --primary: 262 80% 50%;
-  --primary-foreground: 210 40% 98%;
-  --secondary: 217 32.6% 17.5%;
-  --secondary-foreground: 210 40% 98%;
-  --accent: 262 80% 50%;
-  --accent-foreground: 210 40% 98%;
-  --destructive: 0 84.2% 60.2%;
-  --destructive-foreground: 210 40% 98%;
-  --muted: 220 14.3% 95.9%;
-  --muted-foreground: 220 8.9% 46.1%;
-  --border: 220 13% 91%;
-  --input: 220 13% 91%;
-  --ring: 262 80% 50%;
+html {
+  background-color: #131313;
+  color: #e2e2e2;
 }
 
 body {
-  background-color: hsl(var(--background));
-  color: hsl(var(--foreground));
+  background-color: #131313;
+  color: #e2e2e2;
+  font-family: 'Inter', sans-serif;
+}
+
+/* Heading styles using Space Grotesk */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 600;
+}
+
+/* Glass effect */
+.glass {
+  background: rgba(19, 19, 19, 0.7);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(168, 162, 158, 0.1);
+}
+
+/* Status indicator */
+.status-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 16px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.status-active {
+  background: rgba(255, 179, 177, 0.2);
+  border: 1px solid rgba(255, 179, 177, 0.5);
+  color: #ffb3b1;
+}
+
+.status-available {
+  background: rgba(52, 211, 153, 0.2);
+  border: 1px solid rgba(52, 211, 153, 0.5);
+  color: #34d399;
+}
+
+.status-maintenance {
+  background: rgba(251, 191, 36, 0.2);
+  border: 1px solid rgba(251, 191, 36, 0.5);
+  color: #fbbf24;
 }
